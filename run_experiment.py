@@ -42,6 +42,11 @@ N_REPS = 5
 WARMUP_REQUESTS = 5                  # excluded from steady-state measurement
 COLD_START_TIMEOUT_S = 600          # 32B load can be slow; generous bound
 COLD_START_MAX_TOKENS = 16          # tiny: we time first token, not generation
+# Shared context budget for BOTH models. The bench uses 1024+128 tokens, so 4096
+# is ample; fixing it keeps the only cross-model difference the model size itself
+# (the 32B at the model-default 32768 leaves ~1x KV concurrency on one H100,
+# which would make the sustained profile measure KV thrashing, not CUDA graphs).
+MAX_MODEL_LEN = 4096
 RESULTS_DIR = Path(os.path.expanduser("~/cuda-graphs-experiment/results"))
 
 
@@ -73,13 +78,39 @@ def wait_until_ready(timeout_s: int) -> bool:
 
 def start_vllm(model_id: str, enforce_eager: bool) -> subprocess.Popen:
     """Launch vllm serve in the background. Returns the process handle."""
-    cmd = VLLM_SERVE_CMD + [model_id]
+    cmd = VLLM_SERVE_CMD + [model_id, "--max-model-len", str(MAX_MODEL_LEN)]
     if enforce_eager:
         cmd.append("--enforce-eager")
     # VERIFY_ON_NODE: any extra flags needed for the node (dtype, gpu-mem-util).
     log = open(RESULTS_DIR / "vllm_server.log", "ab")
     return subprocess.Popen(cmd, stdout=log, stderr=subprocess.STDOUT,
                             preexec_fn=os.setsid)
+
+
+def find_enginecore_pid(api_proc: subprocess.Popen, retries: int = 30,
+                        delay_s: float = 1.0) -> int | None:
+    """Resolve the EngineCore PID for THIS run.
+
+    vLLM 0.23.0 runs two processes in one process group (start_vllm uses
+    os.setsid): the APIServer parent and the EngineCore that does the GPU
+    work. setproctitle names the latter "VLLM::EngineCore". We scope the
+    search to the run's own process group so concurrent/previous runs can
+    never be matched. Returns None if not found within the retry budget.
+    """
+    try:
+        pgid = os.getpgid(api_proc.pid)
+    except Exception:
+        return None
+    for _ in range(retries):
+        out = subprocess.run(
+            ["pgrep", "-g", str(pgid), "-f", "VLLM::EngineCore"],
+            capture_output=True, text=True,
+        )
+        pids = [int(x) for x in out.stdout.split()]
+        if pids:
+            return pids[0]
+        time.sleep(delay_s)
+    return None
 
 
 def stop_vllm(proc: subprocess.Popen) -> None:
@@ -103,15 +134,20 @@ def measure_cold_start(proc: subprocess.Popen, served_name: str) -> tuple[float 
     t0 = time.time()
     if not wait_until_ready(COLD_START_TIMEOUT_S):
         return None, None
-    # First real request, profiled by inferscope, with resource sampling on the
-    # vllm pid. Per-device GPU comes from inferscope's NVML side (ADR-007).
+    # First real request, profiled by inferscope. Resource + per-device GPU
+    # sampling must target the EngineCore (the GPU process), NOT the APIServer
+    # parent (proc.pid). --gpu enables the NVML sampler (ADR-005/007); without
+    # it the report has no GPU section even on a gpu-nvidia build.
+    engine_pid = find_enginecore_pid(proc)
+    sample_pid = engine_pid if engine_pid is not None else proc.pid
     cmd = [
         INFERSCOPE_BIN,
         "--endpoint", ENDPOINT,
         "--model", served_name,
         "--prompt", "Explain what a Kalman filter does in two sentences.",
         "--max-tokens", str(COLD_START_MAX_TOKENS),
-        "--pid", str(proc.pid),
+        "--pid", str(sample_pid),
+        "--gpu",
         "--json",
     ]
     try:
@@ -146,6 +182,9 @@ def measure_steady_state(served_name: str, profile: dict) -> dict | None:
     cmd = BENCH_CMD + [
         "--model", served_name,
         "--base-url", ENDPOINT,
+        "--dataset-name", "random",
+        "--random-input-len", "1024",
+        "--random-output-len", "128",
         "--num-prompts", str(profile["num_prompts"]),
         "--max-concurrency", str(profile["max_concurrency"]),
         "--save-result", "--result-filename", str(out_path),

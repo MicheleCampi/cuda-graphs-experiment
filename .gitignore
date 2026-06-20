@@ -1,3 +1,7 @@
-*.json
-results/
 __pycache__/
+*.pyc
+run_experiment.py.bak
+run_experiment.py.fromnode
+# logs and temp bench output are not data — exclude from results/
+results/*.log
+results/bench_tmp.json
