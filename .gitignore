@@ -7,3 +7,5 @@ results/*.log
 results/bench_tmp.json
 results-energy/*.log
 results-energy/bench_tmp.json
+results-energy-tight/*.log
+results-energy-tight/bench_tmp.json

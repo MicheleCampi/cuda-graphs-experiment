@@ -1,0 +1,321 @@
+{
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "condition": "graphs_on",
+  "profile": "sustained",
+  "rep": 3,
+  "cold_start_s": 30.268569707870483,
+  "inferscope_json": {
+    "request_timing": {
+      "tokens": [
+        {
+          "index": 0,
+          "elapsed_ns": 109204501
+        },
+        {
+          "index": 1,
+          "elapsed_ns": 110849843
+        },
+        {
+          "index": 2,
+          "elapsed_ns": 116189059
+        },
+        {
+          "index": 3,
+          "elapsed_ns": 122118766
+        },
+        {
+          "index": 4,
+          "elapsed_ns": 127980263
+        },
+        {
+          "index": 5,
+          "elapsed_ns": 133933493
+        },
+        {
+          "index": 6,
+          "elapsed_ns": 139878125
+        },
+        {
+          "index": 7,
+          "elapsed_ns": 145728045
+        },
+        {
+          "index": 8,
+          "elapsed_ns": 151654277
+        },
+        {
+          "index": 9,
+          "elapsed_ns": 157559943
+        },
+        {
+          "index": 10,
+          "elapsed_ns": 163472692
+        },
+        {
+          "index": 11,
+          "elapsed_ns": 169372514
+        },
+        {
+          "index": 12,
+          "elapsed_ns": 175260224
+        },
+        {
+          "index": 13,
+          "elapsed_ns": 181193433
+        },
+        {
+          "index": 14,
+          "elapsed_ns": 187201222
+        },
+        {
+          "index": 15,
+          "elapsed_ns": 192582889
+        }
+      ],
+      "total_ns": 192603259
+    },
+    "resource_timeline": {
+      "samples": [
+        {
+          "elapsed_ns": 1124559,
+          "rss_bytes": 2201022464,
+          "cpu_user_jiffies": 2063,
+          "cpu_system_jiffies": 483,
+          "thread_count": 109
+        },
+        {
+          "elapsed_ns": 50981847,
+          "rss_bytes": 2219859968,
+          "cpu_user_jiffies": 2065,
+          "cpu_system_jiffies": 484,
+          "thread_count": 109
+        },
+        {
+          "elapsed_ns": 101343780,
+          "rss_bytes": 2299424768,
+          "cpu_user_jiffies": 2068,
+          "cpu_system_jiffies": 486,
+          "thread_count": 109
+        },
+        {
+          "elapsed_ns": 151521595,
+          "rss_bytes": 2315509760,
+          "cpu_user_jiffies": 2072,
+          "cpu_system_jiffies": 487,
+          "thread_count": 109
+        },
+        {
+          "elapsed_ns": 201104377,
+          "rss_bytes": 2315513856,
+          "cpu_user_jiffies": 2077,
+          "cpu_system_jiffies": 487,
+          "thread_count": 109
+        }
+      ],
+      "sample_period_ns": 50000000
+    },
+    "gpu_timeline": {
+      "samples": [
+        {
+          "elapsed_ns": 18828730,
+          "device_index": 0,
+          "memory_used_bytes": 79124299776,
+          "memory_total_bytes": 85520809984,
+          "utilization_percent": 0,
+          "temperature_celsius": 34,
+          "power_draw_milliwatts": 118035
+        },
+        {
+          "elapsed_ns": 69259972,
+          "device_index": 0,
+          "memory_used_bytes": 79124299776,
+          "memory_total_bytes": 85520809984,
+          "utilization_percent": 0,
+          "temperature_celsius": 34,
+          "power_draw_milliwatts": 118035
+        },
+        {
+          "elapsed_ns": 119348083,
+          "device_index": 0,
+          "memory_used_bytes": 79124299776,
+          "memory_total_bytes": 85520809984,
+          "utilization_percent": 0,
+          "temperature_celsius": 34,
+          "power_draw_milliwatts": 118035
+        },
+        {
+          "elapsed_ns": 169202956,
+          "device_index": 0,
+          "memory_used_bytes": 79124299776,
+          "memory_total_bytes": 85520809984,
+          "utilization_percent": 0,
+          "temperature_celsius": 35,
+          "power_draw_milliwatts": 124770
+        }
+      ],
+      "sample_period_ns": 50000000,
+      "energy": [
+        {
+          "device_index": 0,
+          "energy_millijoules": 52257,
+          "source": "counter"
+        }
+      ]
+    },
+    "timing": {
+      "token_count": 16,
+      "ttft_ns": 109204501,
+      "total_latency_ns": 192603259,
+      "tokens_per_second": 179.90273450717228,
+      "inter_token_latency": {
+        "count": 15,
+        "mean_ns": 5558559,
+        "p50_ns": 5905666,
+        "p95_ns": 6007789,
+        "p99_ns": 6007789,
+        "max_ns": 6007789
+      }
+    },
+    "resource": {
+      "sample_count": 5,
+      "rss_min_bytes": 2201022464,
+      "rss_max_bytes": 2315513856,
+      "rss_mean_bytes": 2270266163,
+      "rss_final_bytes": 2315513856,
+      "cpu_mean_percent": 90.00908281654702,
+      "thread_min": 109,
+      "thread_max": 109
+    },
+    "gpu": {
+      "sample_count": 4,
+      "device_count": 1,
+      "memory_used_min_bytes": 79124299776,
+      "memory_used_max_bytes": 79124299776,
+      "memory_used_mean_bytes": 79124299776,
+      "memory_total_bytes": 85520809984,
+      "utilization_min_percent": 0,
+      "utilization_max_percent": 0,
+      "utilization_mean_percent": 0,
+      "temperature_max_celsius": 35,
+      "power_max_milliwatts": 124770,
+      "power_mean_milliwatts": 119718,
+      "energy_millijoules": 52257,
+      "energy_source": "counter",
+      "per_device": [
+        {
+          "device_index": 0,
+          "sample_count": 4,
+          "memory_used_min_bytes": 79124299776,
+          "memory_used_max_bytes": 79124299776,
+          "memory_used_mean_bytes": 79124299776,
+          "memory_total_bytes": 85520809984,
+          "utilization_min_percent": 0,
+          "utilization_max_percent": 0,
+          "utilization_mean_percent": 0,
+          "temperature_max_celsius": 35,
+          "power_max_milliwatts": 124770,
+          "power_mean_milliwatts": 119718,
+          "energy_millijoules": 52257,
+          "energy_source": "counter"
+        }
+      ]
+    },
+    "efficiency": {
+      "energy_joules": 52.257,
+      "energy_per_token_mj": 3266.0625,
+      "tokens_per_joule": 0.30617907648736054,
+      "tokens_per_watt": 0.30617907648736054,
+      "energy_source": "counter"
+    }
+  },
+  "inferscope_steady_json": {
+    "pid": 7576,
+    "include_descendants": false,
+    "sample_period_ms": 50,
+    "duration_secs": 45,
+    "resource": {
+      "sample_count": 901,
+      "rss_min_bytes": 2315550720,
+      "rss_max_bytes": 2333167616,
+      "rss_mean_bytes": 2327761727,
+      "rss_final_bytes": 2333167616,
+      "cpu_mean_percent": 42.66617513621076,
+      "thread_min": 109,
+      "thread_max": 109
+    },
+    "gpu": {
+      "sample_count": 900,
+      "device_count": 1,
+      "memory_used_min_bytes": 79124299776,
+      "memory_used_max_bytes": 79128494080,
+      "memory_used_mean_bytes": 79127408221,
+      "memory_total_bytes": 85520809984,
+      "utilization_min_percent": 0,
+      "utilization_max_percent": 100,
+      "utilization_mean_percent": 42,
+      "temperature_max_celsius": 59,
+      "power_max_milliwatts": 708649,
+      "power_mean_milliwatts": 343795,
+      "energy_millijoules": 15379271,
+      "energy_source": "counter",
+      "per_device": [
+        {
+          "device_index": 0,
+          "sample_count": 900,
+          "memory_used_min_bytes": 79124299776,
+          "memory_used_max_bytes": 79128494080,
+          "memory_used_mean_bytes": 79127408221,
+          "memory_total_bytes": 85520809984,
+          "utilization_min_percent": 0,
+          "utilization_max_percent": 100,
+          "utilization_mean_percent": 42,
+          "temperature_max_celsius": 59,
+          "power_max_milliwatts": 708649,
+          "power_mean_milliwatts": 343795,
+          "energy_millijoules": 15379271,
+          "energy_source": "counter"
+        }
+      ]
+    }
+  },
+  "steady_window_secs": 45.0,
+  "steady_attach_offset_s": 0.5,
+  "bench_json": {
+    "date": "20260622-210307",
+    "endpoint_type": "openai",
+    "backend": "openai",
+    "label": null,
+    "model_id": "Qwen/Qwen2.5-7B-Instruct",
+    "tokenizer_id": "Qwen/Qwen2.5-7B-Instruct",
+    "num_prompts": 500,
+    "request_rate": "inf",
+    "burstiness": 1.0,
+    "max_concurrency": 64,
+    "duration": 18.88494768999999,
+    "completed": 500,
+    "failed": 0,
+    "total_input_tokens": 512000,
+    "total_output_tokens": 64000,
+    "request_throughput": 26.47611252133684,
+    "request_goodput": null,
+    "output_throughput": 3388.9424027311156,
+    "total_token_throughput": 30500.481624580043,
+    "max_output_tokens_per_s": 7783.0,
+    "max_concurrent_requests": 128,
+    "rtfx": 0.0,
+    "mean_ttft_ms": 729.2031999659964,
+    "median_ttft_ms": 709.9631159999831,
+    "std_ttft_ms": 362.1210235156313,
+    "p99_ttft_ms": 1582.8774522700473,
+    "mean_tpot_ms": 12.903565027622054,
+    "median_tpot_ms": 12.756782964566904,
+    "std_tpot_ms": 2.633009996670513,
+    "p99_tpot_ms": 18.079650188110723,
+    "mean_itl_ms": 12.903566290425214,
+    "median_itl_ms": 7.908954500010168,
+    "std_itl_ms": 27.13779757723726,
+    "p99_itl_ms": 179.44148836006784
+  },
+  "vllm_version": "0.23.0",
+  "error": null
+}
