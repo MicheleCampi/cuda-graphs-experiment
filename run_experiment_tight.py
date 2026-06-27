@@ -198,6 +198,11 @@ def measure_steady_state(served_name: str, profile: dict, engine_pid: int | None
         "--pid", str(engine_pid),
         "--duration-secs", str(duration_secs),
         "--gpu",
+        # Per-phase energy attribution (ADR-012): scrape the engine's
+        # Prometheus /metrics on the same window as the NVML attach, so
+        # the report carries phase_energy alongside whole-window energy.
+        "--metrics-endpoint", f"{ENDPOINT}/metrics",
+        "--model", served_name,
     ]
     bench_cmd = BENCH_CMD + [
         "--model", served_name,
