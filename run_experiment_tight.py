@@ -54,7 +54,7 @@ MAX_MODEL_LEN = 4096
 # Excess tail is near-idle and is trimmed in analysis via sample elapsed_ns.
 # Validate against bench.duration on rep1; a runtime WARNING fires if the bench
 # fills >90% of the window.
-STEADY_SAMPLE_SECS = {"7B": 45, "32B": 150}
+STEADY_SAMPLE_SECS = {"7B": 60, "32B": 400}
 # Delay between inferscope window-open and bench start, so NVML opens the
 # energy window before the first token. Recorded for analysis alignment.
 STEADY_ATTACH_OFFSET_S = 0.5
