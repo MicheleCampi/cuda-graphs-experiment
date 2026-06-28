@@ -31,7 +31,6 @@ closes that gate. The dataset itself lives at `results-energy-tight/`
 | CUDA            | 13.0                             |
 | Lambda image    | lambda-stack-24-04 (24.4.4-2141) |
 | vLLM            | 0.23.0 (cu13 build)              |
-| vLLM            | 0.23.0 (cu13 build)              |
 
 ## Experiment matrix
 
@@ -52,28 +51,42 @@ All 12 JSON in `results-energy-tight/Qwen2.5-*.json`:
   load (not power-integration fallback).
 - `"error": null` — no failed reps.
 
-## Headline finding (from run; full aggregation pending — see analysis)
+## Headline finding (aggregated -- re-derived from 12 JSON via `aggregate_energy.py`)
+Token denominator = `bench_json.total_output_tokens` = **64000** on all 12
+files (500 prompts x 128 max output, capped; no early-EOS), so the 7B-vs-32B
+cross-model denominator is clean and tokenizer-independent. Energy =
+`inferscope_steady_json.gpu.energy_millijoules`. All guard-rails pass:
+both apportionments sum to total energy; divergence re-derived == stored.
 
-tokens/joule, graphs_on vs graphs_off:
-
-- **7B:** 4.660 vs 4.646 tok/J (+0.3%), energy ~equal. CUDA graphs
-  marginally better.
-- **32B (saturated):** 0.790 vs 0.804 tok/J (−1.7%); energy 81046 vs
+tokens/joule (mean of 3 reps), graphs_on vs graphs_off:
+- **7B:** 4.660 vs 4.646 tok/J (**+0.3%**); energy 13735 vs 13775 J (−0.3%).
+  CUDA graphs marginally better.
+- **32B (saturated):** 0.790 vs 0.804 tok/J (**−1.8%**); energy 81046 vs
   79584 J (+1.8%). CUDA graphs **worse** under saturation.
 
-This converges with the original 40-run throughput result, where
-graphs_on inverted on the 32B under 7.6× overload (−5.15%). Two
-independent metrics (throughput + NVML energy), same conclusion.
+The 32B penalty is a **power** effect, not a time effect: mean power
+199.3->203.0 W (+1.9%) at ~equal active fraction -- graphs run the saturated
+32B hotter without compensating in throughput.
+
+This converges with the original 40-run throughput result, where graphs_on
+inverted on the 32B under 7.6x overload (−5.15%). Two fully independent
+metrics (throughput + NVML energy), same sign, same conclusion.
 
 Per-phase divergence, stable and model-dependent across reps:
 7B ~−0.69, 32B ~−0.60.
 
-> Numbers above are as reported from the run. Detailed re-derivation from
-> the 12 JSON (token-denominator comparability 7B vs 32B included) is the
-> aggregate analysis step, committed separately.
+### Active-fraction caveat (window vs bench duration)
+The steady window is fixed; the bench fills only part of it, so absolute
+tok/J is diluted by idle tail -- but symmetrically within each model, so the
+**relative** on/off claim holds. `active = bench_duration / window`:
+- **32B:** symmetric (off 0.72 / on 0.75) -- clean comparison.
+- **7B:** off 0.72 / on 0.65 (graphs shorten TPOT -> shorter bench -> more
+  idle tail on the on-side). This penalizes graphs_on, yet it still ties/wins.
+  The +0.3% is therefore a floor, not an idle-inflated artifact.
 
 ## Source data
 
 - Dataset: `results-energy-tight/Qwen2.5-{7B,32B}-Instruct_graphs_{on,off}_sustained_rep{1,2,3}.json`
 - Canonical commit: `2e93ef0`
+- Aggregation script: `aggregate_energy.py` (guard-railed re-derivation)
 - Window calibration: `751a11d`
