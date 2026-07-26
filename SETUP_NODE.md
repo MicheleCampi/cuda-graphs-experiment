@@ -1,4 +1,13 @@
-# Node setup — resume notes (cold-prepared)
+# Node setup - resume notes (cold-prepared)
+
+> **Historical note.** These are the working notes written *before* the matrix ran,
+> kept as a record of how the node was prepared and what was still unknown at that
+> point. Everything flagged here as open was resolved during the run: the 32B does
+> fit on one H100 at bf16 with `--max-model-len 4096`, inferscope was rebuilt with
+> `--features gpu-nvidia`, and `run_experiment.py` resolves and samples the EngineCore
+> PID rather than the APIServer parent. Read `README.md` and `PROTOCOL.md` for the
+> state of the experiment as published.
+
 
 Lambda node: 1x H100 80GB PCIe, $3.29/hr. Lambda Stack 22.04.
 Driver 580.105.08, CUDA 13.0. IP changes per instance — get fresh from dashboard.
