@@ -8,7 +8,10 @@ Regenerates the full evidence chain behind the article's thesis:
   4. wall-clock / completed / req-throughput (same work, ON slower under load)
   5. GPU power+util from inferscope (physical signature of wasted work)
   6. dThroughput vs queue-overload trend (two-factor causal model)
-  7. break-even (sustained): requests until ON's throughput repays startup
+  7. break-even (sustained only, per-cell cold start) - superseded by 8
+  8. published cold-start and break-even: cold start pooled across profiles with
+     the AOT-cache-contaminated replicate excluded, break-even in both load
+     regimes. These are the figures that appear in the article.
 All numbers trace to results/*.json. See PROTOCOL.md for design.
 """
 import json, glob, statistics as st
@@ -111,7 +114,7 @@ for m in MODELS:
 for ovl, m, p, d in rows:
     print(f"  {m:24} {p:10} {ovl:8.1f}x {d:+8.2f}%")
 
-hr("7. BREAK-EVEN (sustained): requests until ON repays extra startup")
+hr("7. BREAK-EVEN (sustained, per-cell cold start) - SUPERSEDED BY SECTION 8")
 for m in MODELS:
     on, off = R[(m,"graphs_on","sustained")], R[(m,"graphs_off","sustained")]
     cold_on = st.mean(r.get("cold_start_s") for r in on)
@@ -128,3 +131,52 @@ for m in MODELS:
         print(f"    -> ON wins immediately (no startup penalty)")
     else:
         print(f"    -> never breaks even (ON slower at steady-state too)")
+
+
+hr("8. PUBLISHED COLD-START + BREAK-EVEN (pooled, contamination excluded)")
+# Cold start is measured before the bench, so the load profile does not affect it:
+# the two profiles are replicates of the same quantity and are pooled (n=10).
+# EXCLUSION: rep1 of each campaign pays a cold torch.compile that writes vLLM's AOT
+# cache (7B sporadic ON r1 = 51.76s vs ~36.6s for reps 2-5); later starts load it.
+# Only that replicate is contaminated in this matrix; it is dropped, not averaged in.
+# Readiness is polled on a ~2s grid, so figures are quantised and rounded to 1s.
+EXCLUDE = {("Qwen2.5-7B-Instruct", "graphs_on", "sporadic", 1)}
+
+def cold_pooled(m, cond):
+    vals = []
+    for p in PROFILES:
+        for r in R[(m, cond, p)]:
+            if (m, cond, p, r.get("rep")) in EXCLUDE:
+                continue
+            v = r.get("cold_start_s")
+            if v is not None:
+                vals.append(v)
+    return vals
+
+print("\n  cold start, pooled over profiles (published table):")
+cold = {}
+for m in MODELS:
+    on, off = cold_pooled(m, "graphs_on"), cold_pooled(m, "graphs_off")
+    cold[m] = (st.mean(on), st.mean(off))
+    print(f"    {m:24} ON {st.mean(on):5.1f}s (n={len(on):2d})  "
+          f"OFF {st.mean(off):5.1f}s (n={len(off):2d})  -> +{st.mean(on)-st.mean(off):.1f}s")
+
+print("\n  break-even by load regime (published table):")
+print("    sustained: gain is aggregate throughput, amortised across a saturated batch")
+print("    sporadic : gain is per-request latency at concurrency 1 (TPOT x output tokens)")
+for m in MODELS:
+    d_cold = cold[m][0] - cold[m][1]
+    for p in PROFILES:
+        on, off = R[(m, "graphs_on", p)], R[(m, "graphs_off", p)]
+        if p == "sustained":
+            thr_on = st.mean(b.get("output_throughput") for b in bench(on))
+            thr_off = st.mean(b.get("output_throughput") for b in bench(off))
+            save_s = OUT_TOKENS/thr_off - OUT_TOKENS/thr_on
+        else:
+            tp_on = st.mean(b.get("mean_tpot_ms") for b in bench(on))
+            tp_off = st.mean(b.get("mean_tpot_ms") for b in bench(off))
+            save_s = (tp_off - tp_on) * OUT_TOKENS / 1000.0
+        verdict = (f"~{d_cold/save_s:>6.0f} requests" if save_s > 0
+                   else "     never (ON slower at steady state)")
+        print(f"    {m:24} {p:10} saves {save_s*1000:+8.1f} ms/req  "
+              f"| startup +{d_cold:5.1f}s -> {verdict}")
