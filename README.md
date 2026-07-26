@@ -1,5 +1,8 @@
 # CUDA graphs trade-off in vLLM
 
+Write-up: [CUDA graphs always speed the kernel. They don't always speed the server.](https://michelecampi.github.io/observability/systems-engineering/llm-inference/2026/07/26/cuda-graphs-tradeoff.html)
+The tree behind the published numbers is tagged [`v1.0.0`](https://github.com/MicheleCampi/cuda-graphs-experiment/tree/v1.0.0).
+
 Measured answer to a question the tuning guides skip: CUDA graphs always speed up
 per-token decode, but do they always speed up the *server*? On a saturated 32B they
 do not - the sign of the end-to-end throughput delta flips while decode stays faster.
