@@ -1,0 +1,81 @@
+RUN: Qwen2.5-7B-Instruct_graphs_on_sporadic_rep1
+  saved: Qwen2.5-7B-Instruct_graphs_on_sporadic_rep1.json  cold_start=51.76054549217224  err=None
+RUN: Qwen2.5-7B-Instruct_graphs_on_sporadic_rep2
+  saved: Qwen2.5-7B-Instruct_graphs_on_sporadic_rep2.json  cold_start=36.582390546798706  err=None
+RUN: Qwen2.5-7B-Instruct_graphs_on_sporadic_rep3
+  saved: Qwen2.5-7B-Instruct_graphs_on_sporadic_rep3.json  cold_start=36.59998893737793  err=None
+RUN: Qwen2.5-7B-Instruct_graphs_on_sporadic_rep4
+  saved: Qwen2.5-7B-Instruct_graphs_on_sporadic_rep4.json  cold_start=38.58523988723755  err=None
+RUN: Qwen2.5-7B-Instruct_graphs_on_sporadic_rep5
+  saved: Qwen2.5-7B-Instruct_graphs_on_sporadic_rep5.json  cold_start=36.628910541534424  err=None
+RUN: Qwen2.5-7B-Instruct_graphs_on_sustained_rep1
+  saved: Qwen2.5-7B-Instruct_graphs_on_sustained_rep1.json  cold_start=36.603493452072144  err=None
+RUN: Qwen2.5-7B-Instruct_graphs_on_sustained_rep2
+  saved: Qwen2.5-7B-Instruct_graphs_on_sustained_rep2.json  cold_start=38.59444999694824  err=None
+RUN: Qwen2.5-7B-Instruct_graphs_on_sustained_rep3
+  saved: Qwen2.5-7B-Instruct_graphs_on_sustained_rep3.json  cold_start=34.57475543022156  err=None
+RUN: Qwen2.5-7B-Instruct_graphs_on_sustained_rep4
+  saved: Qwen2.5-7B-Instruct_graphs_on_sustained_rep4.json  cold_start=38.604870319366455  err=None
+RUN: Qwen2.5-7B-Instruct_graphs_on_sustained_rep5
+  saved: Qwen2.5-7B-Instruct_graphs_on_sustained_rep5.json  cold_start=36.59997844696045  err=None
+RUN: Qwen2.5-7B-Instruct_graphs_off_sporadic_rep1
+  saved: Qwen2.5-7B-Instruct_graphs_off_sporadic_rep1.json  cold_start=30.782665729522705  err=None
+RUN: Qwen2.5-7B-Instruct_graphs_off_sporadic_rep2
+  saved: Qwen2.5-7B-Instruct_graphs_off_sporadic_rep2.json  cold_start=32.80213260650635  err=None
+RUN: Qwen2.5-7B-Instruct_graphs_off_sporadic_rep3
+  saved: Qwen2.5-7B-Instruct_graphs_off_sporadic_rep3.json  cold_start=30.80125617980957  err=None
+RUN: Qwen2.5-7B-Instruct_graphs_off_sporadic_rep4
+  saved: Qwen2.5-7B-Instruct_graphs_off_sporadic_rep4.json  cold_start=28.770496606826782  err=None
+RUN: Qwen2.5-7B-Instruct_graphs_off_sporadic_rep5
+  saved: Qwen2.5-7B-Instruct_graphs_off_sporadic_rep5.json  cold_start=28.77800464630127  err=None
+RUN: Qwen2.5-7B-Instruct_graphs_off_sustained_rep1
+  saved: Qwen2.5-7B-Instruct_graphs_off_sustained_rep1.json  cold_start=30.7846097946167  err=None
+RUN: Qwen2.5-7B-Instruct_graphs_off_sustained_rep2
+  saved: Qwen2.5-7B-Instruct_graphs_off_sustained_rep2.json  cold_start=30.883129119873047  err=None
+RUN: Qwen2.5-7B-Instruct_graphs_off_sustained_rep3
+  saved: Qwen2.5-7B-Instruct_graphs_off_sustained_rep3.json  cold_start=28.81576943397522  err=None
+RUN: Qwen2.5-7B-Instruct_graphs_off_sustained_rep4
+  saved: Qwen2.5-7B-Instruct_graphs_off_sustained_rep4.json  cold_start=28.776779890060425  err=None
+RUN: Qwen2.5-7B-Instruct_graphs_off_sustained_rep5
+  saved: Qwen2.5-7B-Instruct_graphs_off_sustained_rep5.json  cold_start=28.7668137550354  err=None
+RUN: Qwen2.5-32B-Instruct_graphs_on_sporadic_rep1
+  saved: Qwen2.5-32B-Instruct_graphs_on_sporadic_rep1.json  cold_start=59.04001808166504  err=None
+RUN: Qwen2.5-32B-Instruct_graphs_on_sporadic_rep2
+  saved: Qwen2.5-32B-Instruct_graphs_on_sporadic_rep2.json  cold_start=57.034512996673584  err=None
+RUN: Qwen2.5-32B-Instruct_graphs_on_sporadic_rep3
+  saved: Qwen2.5-32B-Instruct_graphs_on_sporadic_rep3.json  cold_start=55.032193660736084  err=None
+RUN: Qwen2.5-32B-Instruct_graphs_on_sporadic_rep4
+  saved: Qwen2.5-32B-Instruct_graphs_on_sporadic_rep4.json  cold_start=57.03826451301575  err=None
+RUN: Qwen2.5-32B-Instruct_graphs_on_sporadic_rep5
+  saved: Qwen2.5-32B-Instruct_graphs_on_sporadic_rep5.json  cold_start=55.00873064994812  err=None
+RUN: Qwen2.5-32B-Instruct_graphs_on_sustained_rep1
+  saved: Qwen2.5-32B-Instruct_graphs_on_sustained_rep1.json  cold_start=55.04348039627075  err=None
+RUN: Qwen2.5-32B-Instruct_graphs_on_sustained_rep2
+  saved: Qwen2.5-32B-Instruct_graphs_on_sustained_rep2.json  cold_start=57.01875329017639  err=None
+RUN: Qwen2.5-32B-Instruct_graphs_on_sustained_rep3
+  saved: Qwen2.5-32B-Instruct_graphs_on_sustained_rep3.json  cold_start=55.052546977996826  err=None
+RUN: Qwen2.5-32B-Instruct_graphs_on_sustained_rep4
+  saved: Qwen2.5-32B-Instruct_graphs_on_sustained_rep4.json  cold_start=55.03321552276611  err=None
+RUN: Qwen2.5-32B-Instruct_graphs_on_sustained_rep5
+  saved: Qwen2.5-32B-Instruct_graphs_on_sustained_rep5.json  cold_start=55.04012107849121  err=None
+RUN: Qwen2.5-32B-Instruct_graphs_off_sporadic_rep1
+  saved: Qwen2.5-32B-Instruct_graphs_off_sporadic_rep1.json  cold_start=39.141844749450684  err=None
+RUN: Qwen2.5-32B-Instruct_graphs_off_sporadic_rep2
+  saved: Qwen2.5-32B-Instruct_graphs_off_sporadic_rep2.json  cold_start=39.12412357330322  err=None
+RUN: Qwen2.5-32B-Instruct_graphs_off_sporadic_rep3
+  saved: Qwen2.5-32B-Instruct_graphs_off_sporadic_rep3.json  cold_start=39.13416242599487  err=None
+RUN: Qwen2.5-32B-Instruct_graphs_off_sporadic_rep4
+  saved: Qwen2.5-32B-Instruct_graphs_off_sporadic_rep4.json  cold_start=43.15933322906494  err=None
+RUN: Qwen2.5-32B-Instruct_graphs_off_sporadic_rep5
+  saved: Qwen2.5-32B-Instruct_graphs_off_sporadic_rep5.json  cold_start=43.14228844642639  err=None
+RUN: Qwen2.5-32B-Instruct_graphs_off_sustained_rep1
+  saved: Qwen2.5-32B-Instruct_graphs_off_sustained_rep1.json  cold_start=39.1260199546814  err=None
+RUN: Qwen2.5-32B-Instruct_graphs_off_sustained_rep2
+  saved: Qwen2.5-32B-Instruct_graphs_off_sustained_rep2.json  cold_start=39.12472605705261  err=None
+RUN: Qwen2.5-32B-Instruct_graphs_off_sustained_rep3
+  saved: Qwen2.5-32B-Instruct_graphs_off_sustained_rep3.json  cold_start=39.127655267715454  err=None
+RUN: Qwen2.5-32B-Instruct_graphs_off_sustained_rep4
+  saved: Qwen2.5-32B-Instruct_graphs_off_sustained_rep4.json  cold_start=43.14845514297485  err=None
+RUN: Qwen2.5-32B-Instruct_graphs_off_sustained_rep5
+  saved: Qwen2.5-32B-Instruct_graphs_off_sustained_rep5.json  cold_start=37.12523579597473  err=None
+done. results in /home/ubuntu/cuda-graphs-experiment/results

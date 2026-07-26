@@ -2,10 +2,10 @@ __pycache__/
 *.pyc
 run_experiment.py.bak
 run_experiment.py.fromnode
-# logs and temp bench output are not data — exclude from results/
-results/*.log
+# Server logs ARE evidence: engine-init phase timings (graph capture, torch.compile,
+# AOT cache state) are only recoverable from them, and several published figures
+# depend on that decomposition. They are tracked. Only the orchestrator's scratch
+# bench output is excluded, since it is overwritten on every run.
 results/bench_tmp.json
-results-energy/*.log
 results-energy/bench_tmp.json
-results-energy-tight/*.log
 results-energy-tight/bench_tmp.json
