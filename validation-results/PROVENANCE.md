@@ -31,6 +31,15 @@ closes that gate. The dataset itself lives at `results-energy-tight/`
 | CUDA            | 13.0                             |
 | Lambda image    | lambda-stack-24-04 (24.4.4-2141) |
 | vLLM            | 0.23.0 (cu13 build)              |
+| inferscope      | 62f03d6, reconstructed (see below) |
+
+The inferscope commit was not recorded at run time. 62f03d6 (2026-06-27)
+added per-phase energy to the `--sample-only` window, which these JSON carry,
+so the binary was built at or after it. The only later commit on main before
+the data commit 2e93ef0 (2026-06-28 12:27 UTC) is c0bebb9, which adds one
+`#[test]` function to `crates/inferscope/src/cli.rs` and builds the same
+binary. This assumes the binary was built from main without local changes,
+and that commit dates reflect when the commits existed.
 
 ## Experiment matrix
 
