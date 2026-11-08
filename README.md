@@ -1,7 +1,6 @@
 # CUDA graphs trade-off in vLLM
 
 Write-up: [CUDA graphs always speed the kernel. They don't always speed the server.](https://michelecampi.github.io/observability/systems-engineering/llm-inference/2026/07/26/cuda-graphs-tradeoff.html)
-The tree behind the published numbers is tagged [`v1.0.1`](https://github.com/MicheleCampi/cuda-graphs-experiment/tree/v1.0.1). It holds the same data, scripts and published figures as `v1.0.0`; `v1.0.0` also carried a provenance file in `results-energy-tight/` that still described a replaced run.
 
 Measured answer to a question the tuning guides skip: CUDA graphs always speed up
 per-token decode, but do they always speed up the *server*? On a saturated 32B they
@@ -49,6 +48,10 @@ per-phase energy split do not reconcile.
 The server logs are tracked deliberately: engine-init phase timings (graph capture,
 `torch.compile`, AOT cache state) exist nowhere else, and several published figures
 depend on that decomposition.
+
+The tree behind the published numbers is tagged [`v1.0.1`](https://github.com/MicheleCampi/cuda-graphs-experiment/tree/v1.0.1). It holds the same data, scripts and published figures as `v1.0.0`; `v1.0.0` also carried a provenance file in `results-energy-tight/` that still described a replaced run.
+`v1.0.1` also records the inferscope build, commit 62f03d6, reconstructed
+after the fact (`validation-results/PROVENANCE.md`).
 
 ## Known limits
 
